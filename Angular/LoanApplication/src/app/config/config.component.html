@@ -1,0 +1,49 @@
+<h2>Infrastructure configuration</h2>
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col">Service</th>
+    <th scope="col">URL</th>
+    <th scope="col">Port</th>
+    <th scope="col">Tools</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <th scope="row">1</th>
+    <td>API Gateway</td>
+    <td>http://localhost:8765/</td>
+    <td>8765</td>
+    <td>Netflix Zuul, Ribben Load Balancer</td>
+  </tr>
+  <tr>
+    <th scope="row">2</th>
+    <td>Service Registry/Discovery</td>
+    <td>http://localhost:8761/</td>
+    <td>8761</td>
+    <td>Netflix Eureka</td>
+  </tr>
+  <tr>
+    <th scope="row">3</th>
+    <td>Authentication</td>
+    <td>http://localhost:8200/</td>
+    <td>8200, 8201, 8202</td>
+    <td>Spring Cloud, Spring Boot, JWT Security</td>
+  </tr>
+  <tr>
+    <th scope="row">4</th>
+    <td>Loan Application</td>
+    <td>http://localhost:8100/</td>
+    <td>8100, 8101, 8102</td>
+    <td>Spring Cloud, Spring Boot, JWT Security</td>
+  </tr>
+  <tr>
+    <th scope="row">5</th>
+    <td>Client Application</td>
+    <td>http://localhost:4200/</td>
+    <td>4200</td>
+    <td>Angular</td>
+  </tr>
+  </tbody>
+</table>

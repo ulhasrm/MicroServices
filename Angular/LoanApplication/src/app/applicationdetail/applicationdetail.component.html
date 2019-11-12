@@ -1,0 +1,48 @@
+<h1>Hi {{currentUser.firstName}}!</h1>
+<p>You're logged in as - <b>{{currentUser.role}}</b></p>
+<p><b>Application Details</b></p>
+
+
+<form [formGroup]="applicationDetailForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+        <label for="loanType">App # - </label><label for="loanType">{{application.id}}</label>
+    </div>
+    <div class="form-group">
+        <label for="loanType">Amount - </label><label for="loanType">{{application.amount}}</label>
+    </div>
+    <div class="form-group">
+        <label for="loanType">Amount Approved - </label><label for="loanType">{{application.amountApproved}}</label>
+    </div>
+    <div class="form-group">
+        <label for="loanType">Application Date - </label><label for="loanType">{{application.applicationDate}}</label>
+    </div>
+    <div class="form-group">
+        <label for="loanType">Status - </label><label for="loanType">{{application.status}}</label>
+    </div>
+    <div class="form-group">
+        <label for="loanType">Last Updated - </label><label for="loanType">{{application.updatedDate}}</label>
+    </div>
+    <div class="form-group">
+        <label for="password">Action</label>
+        <select formControlName="applicationAction" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.applicationAction.errors }">
+          <option value="">Select Action</option>
+          <option value="Documents_Pending">Documents_Pending</option>
+          <option value="Approval_Pending">Approval_Pending</option>
+          <option value="Rejected">Rejected</option>
+          <option value="Approved">Approved</option>
+          <option value="Disbursed">Disbursed</option>
+          <option value="Defaulter">Defaulter</option>
+          <option value="Closed">Closed</option>
+        </select>
+
+        <div *ngIf="submitted && f.applicationAction.errors" class="invalid-feedback">
+            <div *ngIf="f.applicationAction.errors.required">Action is Required</div>
+        </div>
+    </div>
+    <div>
+          <button [disabled]="loading" class="btn btn-primary">Submit</button>
+          <img *ngIf="loading" class="pl-3" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+          &nbsp;&nbsp;
+          <a routerLink="/" class="btn btn-primary">Back</a>
+    </div>
+</form>

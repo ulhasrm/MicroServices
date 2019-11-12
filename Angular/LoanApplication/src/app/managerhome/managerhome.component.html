@@ -1,0 +1,40 @@
+<h1>Hi {{currentUser.firstName}}!</h1>
+<p>You're logged in as - <b>{{currentUser.role}}</b></p>
+
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="col">App #</th>
+    <th scope="col">Date</th>
+    <th scope="col">Status</th>
+    <th scope="col">Status Updated</th>
+    <th scope="col">Amount</th>
+    <th scope="col">Approved</th>
+    <th scope="col">Action</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let application of applications; let i = index">
+    <td scope="row">{{i}}</td>
+    <td scope="row">{{application.id}}</td>
+    <td>{{application.applicationDate | date}}</td>
+    <td>{{application.status}}</td>
+    <td>{{application.updatedDate | date:'fullDate' }}</td>
+    <td>{{application.amount}}</td>
+    <td>{{application.amountApproved}}</td>
+    <td>
+      
+      <!-- <div *ngIf="this.isApprovalPending(application)">
+          <a routerLink="" (click)="approve(application)" class="btn btn-primary">Approve</a>
+      </div> -->
+      
+      <div>
+          <a routerLink="" (click)="this.detail(application)" class="btn btn-primary">Detail</a>
+      </div>
+      
+    </td>
+  </tr>
+  
+  </tbody>
+</table>

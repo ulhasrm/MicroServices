@@ -1,0 +1,12 @@
+<h1>Hi {{currentUser.firstName}}!</h1>
+<p>You're logged in as - <b>{{currentUser.role}}</b></p>
+
+
+<p>Existing Loan Applications:</p>
+
+<ul>
+    <li *ngFor="let user of users">
+        {{user.username}} ({{user.firstName}} {{user.lastName}})
+        - <a (click)="deleteUser(user.id)" class="text-danger">Delete</a>
+    </li>
+</ul>
