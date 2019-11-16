@@ -17,7 +17,7 @@ This is a entry point for client requests, all request are passed through API ga
 * Acts as loan balancer of service, if there are more than one instance of any service is deployed in cluster.
 * It is one of the microservice itself, registered to Eureka server
 
-### Service Discovery and Registry
+### Service Registry and Discovery
 Its server using Netflix Eureka. All the micoservices registers them selves to this registry including API gateway.
 When client request arrives in API gateway for any resource, API gateway first makes a request for service discovery, and one of the returned list of servers will be used to make a further call by API gateway.
 * Registers microservice
