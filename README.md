@@ -53,6 +53,10 @@ Its one of the microservice designed to Authenticate User against database.
 4. Loan Application
 5. Client Application
 
+### Database Used
+* Postgres
+* database name and user is configured in application.properties for required microservices
+
 ### Sample Users
 1. ulhas - ulhas123 [User]
 2. peter - peter123 [Admin]
