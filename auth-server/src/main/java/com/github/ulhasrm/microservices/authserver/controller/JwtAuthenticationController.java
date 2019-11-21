@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.github.ulhasrm.microservices.authserver.bean.UserBean;
+import com.github.ulhasrm.microservices.authserver.communication.InterServiceCommunications;
 import com.github.ulhasrm.microservices.authserver.config.JWTTokenUtil;
-import com.github.ulhasrm.microservices.authserver.entity.User;
 import com.github.ulhasrm.microservices.authserver.model.JwtRequest;
 import com.github.ulhasrm.microservices.authserver.model.JwtResponse;
 import com.github.ulhasrm.microservices.authserver.services.UserAuthenticationManager;
-import com.github.ulhasrm.microservices.authserver.services.UserDaoService;
 
 @RestController
 @CrossOrigin( origins = "*", allowedHeaders = "*" )
@@ -27,29 +27,32 @@ public class JwtAuthenticationController
     private JWTTokenUtil jwtTokenUtil;
 
     @Autowired
-    UserDaoService service;
+    InterServiceCommunications communications;
 
     @RequestMapping( value = "/authenticate", method = RequestMethod.POST )
     public JwtResponse createAuthenticationToken( @RequestBody JwtRequest authenticationRequest ) throws Exception
     {
-        final User user = service.getUser( authenticationRequest.getUsername() );
-        if( null == user )
+        final UserBean userBean = communications.getUserDetail( authenticationRequest.getUsername() );
+        if( null == userBean || !userBean.isExists() )
         {
             throw new UsernameNotFoundException( authenticationRequest.getUsername() );
         }
-        authenticate( authenticationRequest.getUsername(), authenticationRequest.getPassword(), user );
 
-        final String token = jwtTokenUtil.generateToken( user );
-        final JwtResponse response = new JwtResponse( token, String.valueOf( user.getId() ), user.getLoginName(),
-                                                      user.getFirstName(), user.getLastName(), user.getRole() );
+        authenticate( authenticationRequest.getUsername(), authenticationRequest.getPassword(),
+                      authenticationRequest.getRole(), userBean );
+
+        final String token = jwtTokenUtil.generateToken( userBean );
+        final JwtResponse response = new JwtResponse( token, String.valueOf( userBean.getId() ), userBean.getUserName(),
+                                                      userBean.getFirstName(), userBean.getLastName() );
         return response;
     }
 
-    private void authenticate( final String username, final String password, final User user ) throws Exception
+    private void authenticate( final String username, final String password, final String role, final UserBean user )
+        throws Exception
     {
         try
         {
-            authenticationManager.authenticate( username, password, user );
+            authenticationManager.authenticate( username, password, role, user );
         }
         catch( DisabledException e )
         {
@@ -62,10 +65,10 @@ public class JwtAuthenticationController
     }
 
     @RequestMapping( value = "/validate", method = RequestMethod.POST )
-    public User validateJWTToken( @RequestBody JwtRequest authenticationRequest )
+    public UserBean validateJWTToken( @RequestBody JwtRequest authenticationRequest )
     {
         // When it reaches here, means validation is already done
-        final User user = service.getUser( authenticationRequest.getUsername() );
-        return user;
+        final UserBean userBean = communications.getUserDetail( authenticationRequest.getUsername() );
+        return userBean;
     }
 }

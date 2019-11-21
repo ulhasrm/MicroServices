@@ -21,6 +21,7 @@ import { ManagerhomeComponent } from './managerhome/managerhome.component';
 import { NewloanComponent } from './newloan/newloan.component';
 import { ApplicationdetailComponent } from './applicationdetail/applicationdetail.component';
 import { ApplicationdetailuserComponent } from './applicationdetailuser/applicationdetailuser.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { ApplicationdetailuserComponent } from './applicationdetailuser/applicat
     ManagerhomeComponent,
     NewloanComponent,
     ApplicationdetailComponent,
-    ApplicationdetailuserComponent
+    ApplicationdetailuserComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,

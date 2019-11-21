@@ -10,7 +10,7 @@ import { Application } from '@/models/application';
 import { Router } from '@angular/router';
 
 @Component({
-    selector: 'app-home',
+    selector: 'app-userhome',
     templateUrl: './userhome.component.html',
     styleUrls: ['./userhome.component.css']
 })

@@ -6,13 +6,13 @@ import { first } from 'rxjs/operators';
 import { AuthenticationService } from '../_services/authentication.service';
 import { AlertService } from '../_services/alert.service';
 
-@Component({templateUrl: 'login.component.html'})
+@Component({ templateUrl: 'login.component.html' })
 export class LoginComponent implements OnInit {
     loginForm: FormGroup;
     loading = false;
     submitted = false;
     returnUrl: string;
-    test :string = "Ulhas"
+    test: string = "Ulhas"
 
     constructor(
         private formBuilder: FormBuilder,
@@ -21,12 +21,10 @@ export class LoginComponent implements OnInit {
         private authenticationService: AuthenticationService,
         private alertService: AlertService
     ) {
+        this.route.params.subscribe(params => this.authenticationService.role = params['role']);
         // redirect to home if already logged in
         if (this.authenticationService.currentUserValue) {
-            if(this.authenticationService.currentUserValue.role=='User')
-            { 
-                this.router.navigate(['/']);
-            }
+            this.router.navigate(['/dashboard']);
         }
     }
 
@@ -37,7 +35,7 @@ export class LoginComponent implements OnInit {
         });
 
         // get return url from route parameters or default to '/'
-        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/dashboard';
     }
 
     // convenience getter for easy access to form fields
@@ -53,13 +51,13 @@ export class LoginComponent implements OnInit {
 
         this.loading = true;
         this.authenticationService.login(this.f.username.value, this.f.password.value)
-            .subscribe( 
+            .subscribe(
                 data => {
                     this.router.navigate([this.returnUrl]);
                 },
                 error => {
                     this.alertService.error(error);
                     this.loading = false;
-        });
+                });
     }
 }

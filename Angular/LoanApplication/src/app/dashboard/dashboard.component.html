@@ -1,0 +1,10 @@
+<p>
+  dashboard works!
+</p>
+
+<p *ngIf="isAdmin">
+  <app-managerhome></app-managerhome>
+</p>
+<p *ngIf="!isAdmin">
+  <app-userhome></app-userhome>
+</p>

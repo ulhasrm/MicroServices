@@ -11,28 +11,28 @@ public class JwtResponse implements Serializable
     private final String password = "";
     private final String firstName;
     private final String lastName;
-    private String role;
+    // private String role;
 
-    public JwtResponse( final String token, final String id, final String username, String firstName, String lastName, final String role )
+    public JwtResponse( final String token, final String id, final String username, String firstName, String lastName )
     {
         this.token = token;
         this.id = id;
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.role = role;
+        // this.role = role;
     }
 
-    public String getRole()
-    {
-        return role;
-    }
-
-
-    public void setRole( String role )
-    {
-        this.role = role;
-    }
+    // public String getRole()
+    // {
+    // return role;
+    // }
+    //
+    //
+    // public void setRole( String role )
+    // {
+    // this.role = role;
+    // }
 
     public String getToken()
     {

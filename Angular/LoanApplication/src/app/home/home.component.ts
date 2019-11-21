@@ -30,12 +30,18 @@ export class HomeComponent implements OnInit {
     }
 
     ngOnInit() {
-        if (this.authenticationService.isAdmin == true) {
+        //this.router.navigate(['/dashboard']);
+        /*if (this.authenticationService.isAdmin == true) {
             this.router.navigate(['/managerhome']);
         }
         else {
             this.router.navigate(['/userhome']);
-        }
+        }*/
+    }
+
+    detail(role: String)
+    {
+      this.router.navigate(['login', role]);
     }
 
 

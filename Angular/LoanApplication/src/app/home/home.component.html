@@ -1,8 +1,7 @@
-<h1>Hi {{currentUser.firstName}}!</h1>
-<p>You're logged in as - <b>{{currentUser.role}}</b></p>
-
-
-<p>Existing Loan Applications:</p>
+<p>Welcome to Loan Processing Applications</p>
+<a routerLink="" (click)="this.detail('C')" class="btn btn-primary">Login as Customer</a>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a routerLink="" (click)="this.detail('M')" class="btn btn-primary">Login as Bank Admin</a>
 
 <ul>
     <li *ngFor="let user of users">

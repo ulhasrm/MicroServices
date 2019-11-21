@@ -10,6 +10,7 @@ import { environment } from '../../environments/environment';
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
     private currentUserSubject: BehaviorSubject<User>;
+    role: String;
     public currentUser: Observable<User>;
     authUrl = environment.authUrl;
     loggedUser : User;
@@ -32,7 +33,8 @@ export class AuthenticationService {
             this.authUrl,
             {
                 username: username,
-                password: password
+                password: password,
+                role: this.role
             },
         ).pipe(map(user => {
             if (user && user.token) {

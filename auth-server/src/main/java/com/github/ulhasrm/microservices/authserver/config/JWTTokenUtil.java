@@ -9,7 +9,7 @@ import java.util.function.Function;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.github.ulhasrm.microservices.authserver.entity.User;
+import com.github.ulhasrm.microservices.authserver.bean.UserBean;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -55,13 +55,14 @@ public class JWTTokenUtil implements Serializable
     }
 
     // generate token for user
-    public String generateToken( final User user )
+    public String generateToken( final UserBean user )
     {
-        Map<String, Object> claims = new HashMap<>();
-        claims.put( "role", user.getRole() );
+        final Map<String, Object> claims = new HashMap<>();
+        // claims.put( "role", user.getRole() );
         claims.put( "name", user.getFirstName() + " " + user.getLastName() );
-        
-        return doGenerateToken( claims, user.getLoginName() );
+        claims.put( "user", user.getUserName() );
+
+        return doGenerateToken( claims, user.getUserName() );
     }
 
     private String doGenerateToken( Map<String, Object> claims, String subject )
@@ -71,10 +72,10 @@ public class JWTTokenUtil implements Serializable
     }
 
     // validate token
-    public Boolean validateToken( String token, User user )
+    public Boolean validateToken( String token, UserBean user )
     {
         final String username = getUsernameFromToken( token );
-        return ( username.equals( user.getLoginName() ) && !isTokenExpired( token ) );
+        return ( username.equals( user.getUserName() ) && !isTokenExpired( token ) );
     }
 
 }

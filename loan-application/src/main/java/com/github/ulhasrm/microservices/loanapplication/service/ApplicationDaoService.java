@@ -9,10 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.github.ulhasrm.microservices.loanapplication.entity.Application;
-import com.github.ulhasrm.microservices.loanapplication.entity.User;
 import com.github.ulhasrm.microservices.loanapplication.exception.ApplicationNotFoundException;
 import com.github.ulhasrm.microservices.loanapplication.repository.ApplicationRepository;
-import com.github.ulhasrm.microservices.loanapplication.repository.UserRepository;
 
 @Repository
 @Transactional
@@ -20,8 +18,6 @@ public class ApplicationDaoService
 {
     @Autowired
     ApplicationRepository applicationRepository;
-    @Autowired
-    UserRepository userRepository;
 
     public Application persist( Application application )
     {
@@ -45,9 +41,9 @@ public class ApplicationDaoService
         return users.get();
     }
 
-    public List<Application> getApplications( final User user )
+    public List<Application> getApplications( final Long userId )
     {
-        List<Application> applications = applicationRepository.findByUserId( user.getId() );
+        List<Application> applications = applicationRepository.findByUserId( userId );
         return applications;
     }
 

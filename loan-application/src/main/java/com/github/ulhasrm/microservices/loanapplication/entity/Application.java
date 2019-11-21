@@ -3,11 +3,13 @@ package com.github.ulhasrm.microservices.loanapplication.entity;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity( name = "Application" )
@@ -15,31 +17,37 @@ import javax.persistence.Table;
 public class Application
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "App_Seq")
+    @GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "App_Seq" )
     private Long id;
 
-    // @ManyToOne
-    // @JoinColumn( name = "userId", nullable = false, insertable = false, updatable = false )
-    // @JsonIgnore
-    @ManyToOne( cascade = CascadeType.ALL )
-    private User user;
-    private LoanStatus status;
+    @Column( name = "user_id", nullable = false )
+    private Long userId;
+
+    @OneToOne( cascade = CascadeType.ALL )
+    @JoinColumn( name = "status" )
+    private Status status;
+
+    @OneToOne( cascade = CascadeType.ALL )
+    @JoinColumn( name = "loanType" )
     private LoanType loanType;
+
     private Date applicationDate;
     private Date updatedDate;
     private Long amount;
     private Long amountApproved;
+    private long mobileNumber;
+    private String referenceNumber;
 
     public Application()
     {
         super();
     }
 
-    public Application( User user, LoanStatus status, Date applicationDate, Date updatedDate, Long amount,
+    public Application( Long userId, Status status, Date applicationDate, Date updatedDate, Long amount,
         Long amountApproved )
     {
         super();
-        this.user = user;
+        this.userId = userId;
         this.status = status;
         this.applicationDate = applicationDate;
         this.updatedDate = updatedDate;
@@ -57,22 +65,12 @@ public class Application
         this.id = id;
     }
 
-    public User getUser()
-    {
-        return user;
-    }
-
-    public void setUser( User userId )
-    {
-        this.user = userId;
-    }
-
-    public LoanStatus getStatus()
+    public Status getStatus()
     {
         return status;
     }
 
-    public void setStatus( LoanStatus status )
+    public void setStatus( Status status )
     {
         this.status = status;
     }
@@ -126,7 +124,35 @@ public class Application
     {
         this.loanType = loanType;
     }
-    
-    
+
+    public long getMobileNumber()
+    {
+        return mobileNumber;
+    }
+
+    public void setMobileNumber( long mobileNumber )
+    {
+        this.mobileNumber = mobileNumber;
+    }
+
+    public String getReferenceNumber()
+    {
+        return referenceNumber;
+    }
+
+    public void setReferenceNumber( String referenceNumber )
+    {
+        this.referenceNumber = referenceNumber;
+    }
+
+    public Long getUserId()
+    {
+        return userId;
+    }
+
+    public void setUserId( Long userId )
+    {
+        this.userId = userId;
+    }
 
 }

@@ -10,10 +10,12 @@ import { ManagerhomeComponent } from './managerhome/managerhome.component';
 import { NewloanComponent } from './newloan/newloan.component';
 import { ApplicationdetailComponent } from './applicationdetail/applicationdetail.component';
 import { ApplicationdetailuserComponent } from './applicationdetailuser/applicationdetailuser.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 const appRoutes: Routes = [
-    { path: '', component: HomeComponent, canActivate: [AuthGuard] },
-    { path: 'login', component: LoginComponent },
+    { path: '', component: HomeComponent },
+    { path: 'login/:role', component: LoginComponent },
+    { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
     { path: 'register', component: RegisterComponent },
     { path: 'userhome', component: UserhomeComponent, canActivate: [AuthGuard] },
     { path: 'managerhome', component: ManagerhomeComponent, canActivate: [AuthGuard] },

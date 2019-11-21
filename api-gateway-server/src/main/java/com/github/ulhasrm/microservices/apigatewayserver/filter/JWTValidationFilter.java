@@ -12,6 +12,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.client.RestTemplate;
 
+import com.github.ulhasrm.microservices.apigatewayserver.bean.UserBean;
+import com.github.ulhasrm.microservices.apigatewayserver.communications.InterServiceCommunications;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
@@ -19,13 +21,16 @@ import com.netflix.zuul.exception.ZuulException;
 import io.jsonwebtoken.ExpiredJwtException;
 
 @Component
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin( origins = "*", allowedHeaders = "*" )
 public class JWTValidationFilter extends ZuulFilter
 {
     private Logger logger = LoggerFactory.getLogger( this.getClass() );
 
     @Autowired
     private JWTTokenUtil jwtTokenUtil;
+
+    @Autowired
+    InterServiceCommunications communication;
 
     @Value( "${service.authentication.serviceId}" )
     private String authenticationServiceId;
@@ -47,7 +52,13 @@ public class JWTValidationFilter extends ZuulFilter
             final String userName;
             try
             {
+                // TODO check the user from header and compare it with user parsed from JWT token
                 userName = jwtTokenUtil.getUsernameFromToken( jwtToken );
+                final UserBean userDetail = communication.getUserDetail( userName );
+                if( !userDetail.isExists() )
+                {
+                    throw new JWTValidationException( "Invalid User" );
+                }
             }
             catch( IllegalArgumentException e )
             {
@@ -86,7 +97,7 @@ public class JWTValidationFilter extends ZuulFilter
                 {
                     throw new ZuulException( "No Beader Token available", 401, "" );
                 }
-                
+
                 validate( request );
             }
         }

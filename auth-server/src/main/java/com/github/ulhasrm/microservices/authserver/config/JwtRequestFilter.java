@@ -12,14 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.github.ulhasrm.microservices.authserver.entity.User;
-import com.github.ulhasrm.microservices.authserver.services.JwtUserDetailsService;
-import com.github.ulhasrm.microservices.authserver.services.UserDaoService;
+import com.github.ulhasrm.microservices.authserver.bean.UserBean;
+import com.github.ulhasrm.microservices.authserver.communication.InterServiceCommunications;
+import com.github.ulhasrm.microservices.authserver.exception.UserNotFoundException;
 
 import io.jsonwebtoken.ExpiredJwtException;
 
@@ -27,12 +26,10 @@ import io.jsonwebtoken.ExpiredJwtException;
 public class JwtRequestFilter extends OncePerRequestFilter
 {
     @Autowired
-    private JwtUserDetailsService jwtUserDetailsService;
-    @Autowired
     private JWTTokenUtil jwtTokenUtil;
-    
+
     @Autowired
-    UserDaoService service;
+    InterServiceCommunications communications;
 
     private HttpHeaders collectHeaders( final HttpServletRequest request )
     {
@@ -46,7 +43,7 @@ public class JwtRequestFilter extends OncePerRequestFilter
         }
         return headers;
     }
-    
+
     @Override
     protected void doFilterInternal( HttpServletRequest request, HttpServletResponse response, FilterChain chain )
         throws ServletException, IOException
@@ -80,13 +77,17 @@ public class JwtRequestFilter extends OncePerRequestFilter
         // Once we get the token validate it.
         if( username != null && SecurityContextHolder.getContext().getAuthentication() == null )
         {
-            User user = this.service.getUser( username );
+            final UserBean userBean = communications.getUserDetail( username );
+            if( !userBean.isExists() )
+            {
+                throw new UserNotFoundException( "Invalid User : " + username );
+            }
             // if token is valid configure Spring Security to manually set
             // authentication
-            if( jwtTokenUtil.validateToken( jwtToken, user ) )
+            if( jwtTokenUtil.validateToken( jwtToken, userBean ) )
             {
                 final UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-                    new UsernamePasswordAuthenticationToken( user, null, null );
+                    new UsernamePasswordAuthenticationToken( userBean, null, null );
                 usernamePasswordAuthenticationToken.setDetails( new WebAuthenticationDetailsSource().buildDetails( request ) );
                 // After setting the Authentication in the context, we specify
                 // that the current user is authenticated. So it passes the
