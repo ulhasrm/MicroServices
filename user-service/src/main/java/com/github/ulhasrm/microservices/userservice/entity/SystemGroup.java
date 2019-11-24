@@ -28,6 +28,7 @@ public class SystemGroup
     public SystemGroup( final String name )
     {
         this.name = name;
+        this.active = true;
     }
 
     public String getName()
@@ -58,6 +59,12 @@ public class SystemGroup
     public void setId( Long id )
     {
         this.id = id;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "SystemGroup [id=" + id + ", name=" + name + ", active=" + active + "]";
     }
 
 }

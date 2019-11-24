@@ -21,21 +21,27 @@ public class LoanType
     private String name;
 
     @Column( name = "active" )
-    private String active;
+    private boolean active;
 
     @OneToOne
     @JoinColumn( name = "defaultStatus", nullable = false )
     private Status defaultStatus;
+    
+    @OneToOne
+    @JoinColumn( name = "workflow" )
+    private WorkFlow workflow;
 
     public LoanType()
     {
         super();
     }
 
-    public LoanType( final String loanTypeName, final Status defaultStatus )
+    public LoanType( final String loanTypeName, final Status defaultStatus, final WorkFlow workFlow )
     {
         this.name = loanTypeName;
         this.defaultStatus = defaultStatus;
+        this.active = true;
+        this.workflow = workFlow;
     }
 
     public Long getId()
@@ -58,12 +64,12 @@ public class LoanType
         this.name = name;
     }
 
-    public String getActive()
+    public boolean isActive()
     {
         return active;
     }
 
-    public void setActive( String active )
+    public void setActive( boolean active )
     {
         this.active = active;
     }
@@ -76,6 +82,16 @@ public class LoanType
     public void setDefaultStatus( Status defaultStatus )
     {
         this.defaultStatus = defaultStatus;
+    }
+
+    public WorkFlow getWorkflow()
+    {
+        return workflow;
+    }
+
+    public void setWorkflow( WorkFlow workflow )
+    {
+        this.workflow = workflow;
     }
 
 }

@@ -76,6 +76,10 @@ public class MyInitialRunner implements CommandLineRunner
             SystemGroup bankManagerGroup = systemGroupRepository.findByName( "Bank Manager" );
 
             mayCreateJoinedUserGroup( adminUser, adminGroup );
+            mayCreateJoinedUserGroup( adminUser, documentationGroup );
+            mayCreateJoinedUserGroup( adminUser, verificationGroup );
+            mayCreateJoinedUserGroup( adminUser, bankManagerGroup );
+            
             mayCreateJoinedUserGroup( ulhasrm, customerGroup );
             mayCreateJoinedUserGroup( amitkan, documentationGroup );
             mayCreateJoinedUserGroup( bharatkam, verificationGroup );

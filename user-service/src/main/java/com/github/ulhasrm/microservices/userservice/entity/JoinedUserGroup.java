@@ -7,18 +7,21 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table( name = "JoinedUserGroup" )
 public class JoinedUserGroup
 {
     @EmbeddedId
+    @JsonIgnore
     private UserGroupId id;
 
-    @ManyToOne( fetch = FetchType.LAZY )
+    @ManyToOne(  )//fetch = FetchType.LAZY
     @MapsId( "userId" )
     private SystemUser user;
 
-    @ManyToOne( fetch = FetchType.LAZY )
+    @ManyToOne(  )//fetch = FetchType.LAZY
     @MapsId( "groupId" )
     private SystemGroup group;
 

@@ -13,14 +13,22 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.github.ulhasrm.microservices.loanapplication.bean.PertChartData;
+import com.github.ulhasrm.microservices.loanapplication.bean.PertChartGenerator;
+import com.github.ulhasrm.microservices.loanapplication.bean.WorkFlowActionResult;
+import com.github.ulhasrm.microservices.loanapplication.bean.WorkflowAction;
 import com.github.ulhasrm.microservices.loanapplication.entity.Application;
 import com.github.ulhasrm.microservices.loanapplication.entity.LoanType;
 import com.github.ulhasrm.microservices.loanapplication.entity.Status;
+import com.github.ulhasrm.microservices.loanapplication.entity.WorkFlow;
+import com.github.ulhasrm.microservices.loanapplication.entity.WorkFlowTransition;
 import com.github.ulhasrm.microservices.loanapplication.exception.ApplicationNotFoundException;
 import com.github.ulhasrm.microservices.loanapplication.exception.InvalidValueException;
+import com.github.ulhasrm.microservices.loanapplication.exception.WorkflowActionException;
 import com.github.ulhasrm.microservices.loanapplication.service.ApplicationDaoService;
 import com.github.ulhasrm.microservices.loanapplication.service.LoanTypeDaoService;
 import com.github.ulhasrm.microservices.loanapplication.service.StatusDaoService;
+import com.github.ulhasrm.microservices.loanapplication.service.WorkflowTransitionDaoService;
 
 @RestController
 @CrossOrigin( origins = "*", allowedHeaders = "*" )
@@ -34,6 +42,9 @@ public class ApplicationController
 
     @Autowired
     StatusDaoService statusService;
+
+    @Autowired
+    WorkflowTransitionDaoService workflowTransitionService;
 
     @GetMapping( path = "/SystemUser/{userId}/Application/{id}" )
     public List<Application> getApplication( @PathVariable( value = "userId" ) String userId,
@@ -91,7 +102,8 @@ public class ApplicationController
 
         if( null == application.getStatus() )
         {
-            final Status defaultStatus = loanType.getDefaultStatus();
+            final LoanType refreshedLoanType = loanTypeService.getLoanType( loanType.getName() );
+            final Status defaultStatus = refreshedLoanType.getDefaultStatus();
             application.setStatus( defaultStatus );
         }
 
@@ -125,6 +137,48 @@ public class ApplicationController
 
         Application savedApplication = applicationService.persist( application );
         return savedApplication;
+    }
+
+    @PostMapping( path = "Application/PerformAction" )
+    public WorkFlowActionResult performAction( @RequestBody final WorkflowAction action )
+    {
+        final long applicationId = action.getApplicationId();
+        final Application application = applicationService.getApplication( applicationId );
+        final long transactionId = action.getTransactionId();
+        final WorkFlowTransition workflowTransition = workflowTransitionService.getWorkflowTransition( transactionId );
+        final Status toStatus = workflowTransition.getTo();
+
+        application.setStatus( toStatus );
+        final Date currentDate = new Date();
+        application.setUpdatedDate( currentDate );
+
+        try
+        {
+            Application savedApplication = applicationService.persist( application );
+        }
+        catch( Exception e )
+        {
+            return new WorkFlowActionResult( applicationId, transactionId, toStatus, false, e.getLocalizedMessage() );
+        }
+
+        return new WorkFlowActionResult( applicationId, transactionId, toStatus, true,
+                                         "Application status updated as - " + toStatus.getName() );
+    }
+    
+    @GetMapping( path = "Application/WorkFlowChart/{appId}/{transitionId}" )
+    public PertChartData getWorkFlowChart( @PathVariable( value = "appId" ) Long appId,
+        @PathVariable( value = "transitionId" ) Long transitionId )
+    {
+        final Application application = applicationService.getApplication( appId );
+        final LoanType loanType = application.getLoanType();
+        final WorkFlow workflow = loanType.getWorkflow();
+        Status currentStatus = application.getStatus();
+        final List<WorkFlowTransition> transitions =
+            workflowTransitionService.getWorkflowTransitionsByWorkflow( workflow );
+
+        final PertChartGenerator chartGenerator = new PertChartGenerator();
+        final PertChartData chartData = chartGenerator.generateChart( transitions, currentStatus );
+        return chartData;
     }
 
 }
