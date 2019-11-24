@@ -43,21 +43,29 @@ Its one of the microservice designed to Authenticate User against database.
 | API Gateway | 8765 |  8765     |Netflix Zuul, Ribben Load Balancer, JWT Security|
 | Service Registry/Discovery | http://localhost:8761/ | 8761 |Netflix Eureka|
 | Authentication Service |http://localhost:8200/  |8200, 8201, 8202, ...|Spring Cloud, Spring Boot, JWT Security|
-| Loan Application | http://localhost:8100/  |8100, 8101, 8102|Spring Cloud, Spring Boot |
-| Client Application | http://localhost:4200/ | 4200 | Angular |
+| Loan Application | http://localhost:8100/  |8100, 8101, 8102|Spring Cloud, Spring Boot, Postgres |
+| User Service | http://localhost:8300/  |8300, 8301, 8302|Spring Cloud, Spring Boot, Postgres |
+| Client Application | http://localhost:4200/ | 4200 | Angular, Bootstrap, Mermaid Charts |
 
 ### Run the applications in following order
 1. Service Registry
 2. API Gateway
 3. Authentication Service
 4. Loan Application
-5. Client Application
+5. User Service
+6. Client Application
 
 ### Database Used
 * Postgres
 * database name and user is configured in application.properties for required microservices
 
 ### Sample Users
-1. ulhas - ulhas123 [User]
-2. peter - peter123 [Admin]
+1. ulhas - ulhas [User]
+2. admin - admin [Admin]
+
+### Loan processing Workflow
+* WorkFlow, WorkFlowTransition, Application Status, Loan Types, etc. objects are designed. Rest API are provided to GET/POST all these objects as per REST standards.
+* Application details screen displays actions based on work flow and current status.
+* Application detail screen has one more utility to see the pert chart view of work flow.
+
 
