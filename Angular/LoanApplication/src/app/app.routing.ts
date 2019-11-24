@@ -11,6 +11,8 @@ import { NewloanComponent } from './newloan/newloan.component';
 import { ApplicationdetailComponent } from './applicationdetail/applicationdetail.component';
 import { ApplicationdetailuserComponent } from './applicationdetailuser/applicationdetailuser.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ErrorComponent } from './error/error.component';
+import { WorkflowviewComponent } from './workflowview/workflowview.component';
 
 const appRoutes: Routes = [
     { path: '', component: HomeComponent },
@@ -23,6 +25,8 @@ const appRoutes: Routes = [
     { path: 'newloan', component: NewloanComponent },
     { path: 'applicationDetail/:id', component: ApplicationdetailComponent },
     { path: 'applicationDetailUser/:id', component: ApplicationdetailuserComponent },
+    { path: 'error', component: ErrorComponent },
+    { path: 'workflowview', component: WorkflowviewComponent },
 
     // otherwise redirect to home
     { path: '**', redirectTo: '' }

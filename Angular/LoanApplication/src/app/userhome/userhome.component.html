@@ -1,30 +1,28 @@
-<h1>Hi {{currentUser.firstName}}!</h1>
-<p>You're logged in as - <b>{{currentUser.role}}</b></p>
-
-
 <a routerLink="/newloan" class="btn btn-primary">Apply For Loan</a>
 
 <table class="table table-striped">
   <thead>
   <tr>
     <th scope="col">Application No</th>
+    <th scope="col">Loan Type</th>
     <th scope="col">Date</th>
     <th scope="col">Status</th>
     <th scope="col">Status Updated</th>
     <th scope="col">Amount</th>
-    <th scope="col">Approved</th>
+    <th scope="col">Approved Amount</th>
     <th scope="col">Detail</th>
   </tr>
   </thead>
   <tbody>
   <tr *ngFor="let application of applications">
     <td scope="row">{{application.id}}</td>
-    <td>{{application.applicationDate | date:'fullDate'}}</td>
-    <td>{{application.status}}</td>
-    <td>{{application.updatedDate | date:'fullDate' }}</td>
+    <td>{{application.loanType.name}}</td>
+    <td>{{application.applicationDate | date:'shortDate'}}</td>
+    <td>{{application.status.name}}</td>
+    <td>{{application.updatedDate | date:'shortDate' }}</td>
     <td>{{application.amount}}</td>
     <td>{{application.amountApproved}}</td>
-    <td><a routerLink="" (click)="this.detail(application)" class="btn btn-primary">Detail</a></td>
+    <td><a routerLink="" (click)="this.detail(application.id)" class="btn btn-primary">Detail</a></td>
   </tr>
   
   </tbody>

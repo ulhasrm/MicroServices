@@ -8,6 +8,7 @@ import { AuthenticationService } from '../_services/authentication.service';
 import { ApplicationService } from '@/_services/application.service';
 import { Application } from '@/models/application';
 import { Router } from '@angular/router';
+import { LoggedInUser } from '@/models/logerInUser';
 
 @Component({
     selector: 'app-userhome',
@@ -16,7 +17,7 @@ import { Router } from '@angular/router';
 })
 export class UserhomeComponent implements OnInit {
 
-    public currentUser: User;
+    public currentUser: LoggedInUser;
     currentUserSubscription: Subscription;
     users: User[] = [];
     applications: Application[] = [];
@@ -47,7 +48,7 @@ export class UserhomeComponent implements OnInit {
 
     detail(application: Application)
     {
-      this.router.navigate(['applicationDetailUser', application.id]);
+      this.router.navigate(['applicationDetailUser', application]);
     }
 
     

@@ -8,6 +8,7 @@ import { UserService, } from '../_services/user.service';
 import { AuthenticationService } from '../_services/authentication.service';
 import { ApplicationService } from '@/_services/application.service';
 import { environment } from '../../environments/environment';
+import { LoanType } from '@/models/loantype';
 
 @Component({
   selector: 'app-newloan',
@@ -19,6 +20,7 @@ export class NewloanComponent implements OnInit {
   loading = false;
   submitted = false;
   loanAppUrl = environment.loanappUrl;
+  loanTypes: LoanType[];
 
   constructor(private formBuilder: FormBuilder,
     private router: Router,
@@ -34,8 +36,12 @@ export class NewloanComponent implements OnInit {
   ngOnInit() {
     this.loanForm = this.formBuilder.group({
       loanType: ['', Validators.required],
-      amountRequired: ['', Validators.required]
+      amountRequired: ['', Validators.required],
+      mobileNumber: ['', Validators.pattern('[0-9]+')]
     });
+
+    this.getLoanTypes();
+
 
   }
   // convenience getter for easy access to form fields
@@ -50,7 +56,8 @@ export class NewloanComponent implements OnInit {
     }
 
     this.loading = true;
-    this.applicationService.create(this.f.loanType.value, this.f.amountRequired.value, this.authenticationService.currentUserValue.id )
+    this.applicationService.create(this.f.loanType.value, this.f.amountRequired.value, this.f.mobileNumber.value,
+      this.authenticationService.currentUserValue.id)
       .pipe(first())
       .subscribe(
         data => {
@@ -61,7 +68,13 @@ export class NewloanComponent implements OnInit {
           this.alertService.error(error);
           this.loading = false;
         });
-      
+
+  }
+
+
+  getLoanTypes(): void {
+    const loanTypeTask = this.applicationService.getAllLoanTypes();
+    loanTypeTask.subscribe(types => this.loanTypes = types);
   }
 
 }

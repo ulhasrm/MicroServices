@@ -22,6 +22,11 @@ import { NewloanComponent } from './newloan/newloan.component';
 import { ApplicationdetailComponent } from './applicationdetail/applicationdetail.component';
 import { ApplicationdetailuserComponent } from './applicationdetailuser/applicationdetailuser.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ErrorComponent } from './error/error.component';
+import { WorkflowactionComponent } from './workflowaction/workflowaction.component';
+import { WorkflowviewComponent } from './workflowview/workflowview.component';
+import { MatDialogModule, MatButtonModule } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -36,13 +41,19 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     NewloanComponent,
     ApplicationdetailComponent,
     ApplicationdetailuserComponent,
-    DashboardComponent
+    DashboardComponent,
+    ErrorComponent,
+    WorkflowactionComponent,
+    WorkflowviewComponent,
   ],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
     HttpClientModule,
-    routing
+    routing,
+    MatDialogModule,
+    MatButtonModule,
+    BrowserAnimationsModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

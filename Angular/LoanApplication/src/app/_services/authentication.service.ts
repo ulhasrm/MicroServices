@@ -4,32 +4,32 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { User } from '../models/user';
 import { environment } from '../../environments/environment';
+import { LoggedInUser } from '@/models/logerInUser';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
-    private currentUserSubject: BehaviorSubject<User>;
+    private currentUserSubject: BehaviorSubject<LoggedInUser>;
     role: String;
-    public currentUser: Observable<User>;
+    public currentUser: Observable<LoggedInUser>;
     authUrl = environment.authUrl;
-    loggedUser : User;
+    loggedUser : LoggedInUser;
 
     constructor(private http: HttpClient) {
-        this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
+        this.currentUserSubject = new BehaviorSubject<LoggedInUser>(JSON.parse(localStorage.getItem('currentUser')));
         this.currentUser = this.currentUserSubject.asObservable();
     }
 
-    public get currentUserValue(): User {
+    public get currentUserValue(): LoggedInUser {
         return this.currentUserSubject.value;
     }
 
     public get isAdmin(): Boolean {
-        return this.currentUserSubject.value.role == 'Admin';
+        return this.currentUserSubject.value.admin == true;
     }
 
     login(username: string, password: string) {
-        return this.http.post<User>(
+        return this.http.post<LoggedInUser>(
             this.authUrl,
             {
                 username: username,

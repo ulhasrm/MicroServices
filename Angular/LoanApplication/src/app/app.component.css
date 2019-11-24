@@ -1,0 +1,13 @@
+.loggedUser {
+  color: rgba(255, 255, 255, .5);
+  text-align: right;
+  padding-top: 10px;
+  padding-left: 100px;
+
+}
+
+.jumbotron
+{
+  height:80%;
+  background-color: #ffffff;
+}

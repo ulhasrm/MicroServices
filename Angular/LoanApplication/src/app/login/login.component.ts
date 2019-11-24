@@ -29,6 +29,11 @@ export class LoginComponent implements OnInit {
     }
 
     ngOnInit() {
+        if(this.authenticationService.role != "C" && this.authenticationService.role != "M")
+        {
+            this.router.navigate(['error']);
+        }
+
         this.loginForm = this.formBuilder.group({
             username: ['', Validators.required],
             password: ['', Validators.required]
@@ -56,7 +61,7 @@ export class LoginComponent implements OnInit {
                     this.router.navigate([this.returnUrl]);
                 },
                 error => {
-                    this.alertService.error(error);
+                    this.alertService.error(error, true);
                     this.loading = false;
                 });
     }

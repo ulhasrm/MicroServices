@@ -6,6 +6,7 @@ import { User } from '../models/user';
 import { UserService } from '../_services/user.service';
 import { AuthenticationService } from '../_services/authentication.service';
 import { Router } from '@angular/router';
+import { LoggedInUser } from '@/models/logerInUser';
 
 @Component({
     selector: 'app-home',
@@ -14,7 +15,7 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
-    public currentUser: User;
+    public currentUser: LoggedInUser;
     currentUserSubscription: Subscription;
     users: User[] = [];
 
@@ -30,13 +31,10 @@ export class HomeComponent implements OnInit {
     }
 
     ngOnInit() {
-        //this.router.navigate(['/dashboard']);
-        /*if (this.authenticationService.isAdmin == true) {
-            this.router.navigate(['/managerhome']);
+        if( this.authenticationService.currentUserValue )
+        {
+            this.router.navigate(['/dashboard']);
         }
-        else {
-            this.router.navigate(['/userhome']);
-        }*/
     }
 
     detail(role: String)

@@ -36,13 +36,16 @@ module.exports = {
             })
         })
     ],
-    optimization: {
-        splitChunks: {
-            chunks: 'all',
-        },
-        runtimeChunk: true
-    },
+    // optimization: {
+    //     splitChunks: {
+    //         chunks: 'all',
+    //     },
+    //     runtimeChunk: true
+    // },
     devServer: {
-        historyApiFallback: true
+        //historyApiFallback: true
+        clientLogLevel: 'info'
+    },
+    output: {
     }
 };

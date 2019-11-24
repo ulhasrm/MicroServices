@@ -1,0 +1,88 @@
+@import "../../assets/mermaid.css";
+.mat-dialog-container
+{
+	z-index:1000!important;
+	position:absolute!important;
+	width:99%!important;
+	height:98%;
+	box-shadow:0 11px 15px -7px rgba(0,0,0,.2),0 24px 38px 3px rgba(0,0,0,.14),0 9px 46px 8px rgba(0,0,0,.12)!important;
+	background:#fff!important;
+	color:rgba(0,0,0,.87)!important;
+	top:10px;
+	overflow:hidden;
+	margin-left:10px;
+	z-index: 10;
+    position: absolute;
+	background: white;
+	top: 25px;
+}
+.dialog-container
+{
+	width:80%;
+	height:80%;
+	margin-left:10%;
+	margin-right:1%;
+	margin-top:0;
+	z-index: 10;
+    position: absolute;
+	background: white;
+	top: 100px;
+	box-shadow: 2px 2px 10px 0px;
+}
+.mat-dialog-header
+{
+	text-align:center;
+	margin-bottom:5px
+}
+.mat-dialog-header-label
+{
+	font-weight:500;
+	font-family:inherit;
+	font-size:18px
+}
+.mat-dialog-actions-box
+{
+	margin-top:30px;
+	text-align:right;
+	margin-right:16px
+}
+.task_button_square
+{
+	background-color:#0366d6;
+	border-color:#0366d6;
+	color:#fff;
+	padding:6px 10px;
+	margin-left:10px;
+	border-radius:4px;
+	outline:0
+}
+.task_button_square:hover
+{
+	background-color:#024ea4;
+	border-color:#024ea4;
+	cursor:pointer;
+	outline:0
+}
+.historyContainerBox
+{
+	overflow:auto;
+	height:100%;
+	width:100%;
+	border:1px solid #aa3
+}
+.chartContainerBox
+{
+	height: 85%;
+	overflow: auto;
+}
+
+table.standard
+{
+	margin-left:5px;
+	width:99%
+}
+
+tr.c0,tr.c1
+{
+	height:35px
+}

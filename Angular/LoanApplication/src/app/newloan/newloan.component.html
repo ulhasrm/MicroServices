@@ -6,12 +6,18 @@
         <label for="loanType">Loan Type</label>
         <select formControlName="loanType" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.loanType.errors }">
           <option value="">Select Loan Type</option>
-          <option value="Personal_Loan">Personal_Loan</option>
-          <option value="Home_Loan">Home_Loan</option>
-          <option value="Car_Loan">Car_Loan</option>
+          <!--option value="Car_Loan">Car_Loan</option-->
+          <option [ngValue]="type" *ngFor="let type of loanTypes">{{type.name}}</option>
         </select>
         <div *ngIf="submitted && f.loanType.errors" class="invalid-feedback">
             <div *ngIf="f.loanType.errors.required">Loan Type is required</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="mobileNumber">Mobile Number</label>
+        <input type="text" formControlName="mobileNumber" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.mobileNumber.errors }" />
+        <div *ngIf="submitted && f.mobileNumber.errors" class="invalid-feedback">
+            <div *ngIf="f.mobileNumber.errors.required">Numeric value only</div>
         </div>
     </div>
     <div class="form-group">

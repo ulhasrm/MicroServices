@@ -1,0 +1,14 @@
+#actionBox
+{
+    width:100%;
+    margin: 0 auto;
+    margin-top:75px;
+    height:250px;
+    border:1px solid black;
+}
+
+.actionBtn
+{
+    float: left;
+    margin-left: 10px;
+}

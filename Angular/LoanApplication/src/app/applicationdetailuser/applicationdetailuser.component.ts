@@ -8,6 +8,7 @@ import { Subscription } from 'rxjs';
 import { AuthenticationService } from '@/_services/authentication.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AlertService } from '@/_services/alert.service';
+import { LoggedInUser } from '@/models/logerInUser';
 
 @Component({
   selector: 'app-applicationdetailuser',
@@ -16,9 +17,9 @@ import { AlertService } from '@/_services/alert.service';
 })
 export class ApplicationdetailuserComponent implements OnInit {
 
-  applicationId;
+  applicationId: number;
   application: Application;
-  public currentUser: User;
+  public currentUser: LoggedInUser;
   currentUserSubscription: Subscription;
   applicationDetailForm: FormGroup;
   loading = false;
@@ -31,7 +32,7 @@ export class ApplicationdetailuserComponent implements OnInit {
               private formBuilder: FormBuilder,
               private alertService: AlertService,
               private router: Router) {
-    this.route.params.subscribe(params => this.applicationId = params['id']);
+    this.route.params.subscribe(params => this.applicationId = params.id);
     this.currentUser = this.authenticationService.currentUserValue;
     this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
       this.currentUser = user;
