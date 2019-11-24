@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.github.ulhasrm.microservices.authserver.bean.UserBean;
+import com.github.ulhasrm.microservices.authserver.bean.UserGroupBean;
 import com.github.ulhasrm.microservices.authserver.communication.InterServiceCommunications;
 import com.github.ulhasrm.microservices.authserver.exception.UserNotFoundException;
 
@@ -77,8 +78,8 @@ public class JwtRequestFilter extends OncePerRequestFilter
         // Once we get the token validate it.
         if( username != null && SecurityContextHolder.getContext().getAuthentication() == null )
         {
-            final UserBean userBean = communications.getUserDetail( username );
-            if( !userBean.isExists() )
+            final UserGroupBean userBean = communications.getUserDetail( username );
+            if( !userBean.isExist() )
             {
                 throw new UserNotFoundException( "Invalid User : " + username );
             }

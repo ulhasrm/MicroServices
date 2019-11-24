@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.github.ulhasrm.microservices.authserver.bean.UserBean;
+import com.github.ulhasrm.microservices.authserver.bean.UserGroupBean;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -55,10 +56,10 @@ public class JWTTokenUtil implements Serializable
     }
 
     // generate token for user
-    public String generateToken( final UserBean user )
+    public String generateToken( final UserGroupBean user )
     {
         final Map<String, Object> claims = new HashMap<>();
-        // claims.put( "role", user.getRole() );
+        claims.put( "role", user.getOnlyGroupNames() );
         claims.put( "name", user.getFirstName() + " " + user.getLastName() );
         claims.put( "user", user.getUserName() );
 
@@ -72,7 +73,7 @@ public class JWTTokenUtil implements Serializable
     }
 
     // validate token
-    public Boolean validateToken( String token, UserBean user )
+    public Boolean validateToken( String token, UserGroupBean user )
     {
         final String username = getUsernameFromToken( token );
         return ( username.equals( user.getUserName() ) && !isTokenExpired( token ) );

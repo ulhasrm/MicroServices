@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Component;
 
-import com.github.ulhasrm.microservices.authserver.bean.UserBean;
+import com.github.ulhasrm.microservices.authserver.bean.UserGroupBean;
 import com.github.ulhasrm.microservices.authserver.security.DefaultHashGenerator;
 
 @Component
@@ -13,7 +13,7 @@ public class UserAuthenticationManager
     @Autowired
     private DefaultHashGenerator hashGenerator;
 
-    public void authenticate( String username, String password, String role, UserBean user )
+    public void authenticate( String username, String password, String role, UserGroupBean user )
     {
         if( null != user )
         {

@@ -11,28 +11,20 @@ public class JwtResponse implements Serializable
     private final String password = "";
     private final String firstName;
     private final String lastName;
-    // private String role;
+    private final String groups;
+    private final boolean admin;
 
-    public JwtResponse( final String token, final String id, final String username, String firstName, String lastName )
+    public JwtResponse( final String token, final String id, final String username, String firstName, String lastName,
+        final String groups, final boolean admin )
     {
         this.token = token;
         this.id = id;
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
-        // this.role = role;
+        this.groups = groups;
+        this.admin = admin;
     }
-
-    // public String getRole()
-    // {
-    // return role;
-    // }
-    //
-    //
-    // public void setRole( String role )
-    // {
-    // this.role = role;
-    // }
 
     public String getToken()
     {
@@ -62,6 +54,16 @@ public class JwtResponse implements Serializable
     public String getLastName()
     {
         return lastName;
+    }
+
+    public String getGroups()
+    {
+        return groups;
+    }
+
+    public boolean isAdmin()
+    {
+        return admin;
     }
 
 }

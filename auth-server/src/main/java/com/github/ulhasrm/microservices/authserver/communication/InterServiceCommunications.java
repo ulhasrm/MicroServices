@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import com.github.ulhasrm.microservices.authserver.bean.UserBean;
+import com.github.ulhasrm.microservices.authserver.bean.UserGroupBean;
 import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.EurekaClient;
 import com.netflix.discovery.shared.Application;
@@ -22,22 +22,32 @@ public class InterServiceCommunications
     @Value( "${spring.microservices.user.service.name}" )
     private String userServiceName;
 
-    public UserBean getUserDetail( final String userName )
+    public UserGroupBean getUserDetail( final String userName )
     {
         Application application = discoveryClient.getApplication( userServiceName );
         final List<InstanceInfo> instances = application.getInstances();
         if( instances.size() > 0 )
         {
             final InstanceInfo instance = instances.get( 0 );
-            final String url = instance.getHomePageUrl() + "SystemUser/" + userName;
-            final ResponseEntity<UserBean> responseEntity = new RestTemplate().getForEntity( url, UserBean.class );
-            final UserBean body = responseEntity.getBody();
+            final String url = instance.getHomePageUrl() + "/JoinedUserGroup/SystemUser/" + userName;
+            final ResponseEntity<UserGroupBean> responseEntity =
+                new RestTemplate().getForEntity( url, UserGroupBean.class );
+            final UserGroupBean body = responseEntity.getBody();
 
-            final UserBean userBean = new UserBean( body.getUserName(), body.getFirstName(), body.getLastName(),
-                                                    body.getId(), body.getPassword() );
-            return userBean;
+            if( body.isExist() )
+            {
+                final UserGroupBean userGroupBean =
+                    new UserGroupBean( body.getId(), body.getUserName(), body.getFirstName(), body.getLastName(),
+                                       body.getPassword() );
+                userGroupBean.setGroups( body.getGroups() );
+                userGroupBean.setAdmin( body.isAdmin() );
+
+                return userGroupBean;
+            }
         }
 
-        return new UserBean();
+        final UserGroupBean emptyBean = new UserGroupBean();
+        emptyBean.setExist( false );
+        return emptyBean;
     }
 }
