@@ -30,7 +30,7 @@ export class WorkflowviewComponent implements OnInit {
 
   ngOnInit() {
     this.callLazyLoadMermaid();
-    this.drawDummyChart();
+    //this.drawDummyChart();
   }
 
   drawDummyChart() {
@@ -47,6 +47,7 @@ export class WorkflowviewComponent implements OnInit {
   }
 
   close() {
+    $("#productionFlowChart").html("");
     this.dialogRef.close();
   }
 
