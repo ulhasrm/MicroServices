@@ -16,7 +16,6 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.github.ulhasrm.microservices.authserver.bean.UserBean;
 import com.github.ulhasrm.microservices.authserver.bean.UserGroupBean;
 import com.github.ulhasrm.microservices.authserver.communication.InterServiceCommunications;
 import com.github.ulhasrm.microservices.authserver.exception.UserNotFoundException;

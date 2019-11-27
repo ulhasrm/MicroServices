@@ -24,7 +24,6 @@ import com.github.ulhasrm.microservices.loanapplication.entity.WorkFlow;
 import com.github.ulhasrm.microservices.loanapplication.entity.WorkFlowTransition;
 import com.github.ulhasrm.microservices.loanapplication.exception.ApplicationNotFoundException;
 import com.github.ulhasrm.microservices.loanapplication.exception.InvalidValueException;
-import com.github.ulhasrm.microservices.loanapplication.exception.WorkflowActionException;
 import com.github.ulhasrm.microservices.loanapplication.service.ApplicationDaoService;
 import com.github.ulhasrm.microservices.loanapplication.service.LoanTypeDaoService;
 import com.github.ulhasrm.microservices.loanapplication.service.StatusDaoService;
@@ -154,7 +153,7 @@ public class ApplicationController
 
         try
         {
-            Application savedApplication = applicationService.persist( application );
+            applicationService.persist( application );
         }
         catch( Exception e )
         {

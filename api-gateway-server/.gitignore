@@ -48,3 +48,4 @@ target/
 .project
 .settings/
 .mvn
+/bin/

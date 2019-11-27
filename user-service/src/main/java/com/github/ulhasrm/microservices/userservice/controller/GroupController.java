@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.ulhasrm.microservices.userservice.entity.JoinedUserGroup;
 import com.github.ulhasrm.microservices.userservice.entity.SystemGroup;
 import com.github.ulhasrm.microservices.userservice.exception.InvalidValueException;
 import com.github.ulhasrm.microservices.userservice.service.SystemGroupDaoService;

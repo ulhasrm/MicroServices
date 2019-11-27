@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.ulhasrm.microservices.authserver.bean.UserBean;
 import com.github.ulhasrm.microservices.authserver.bean.UserGroupBean;
 import com.github.ulhasrm.microservices.authserver.communication.InterServiceCommunications;
 import com.github.ulhasrm.microservices.authserver.config.JWTTokenUtil;

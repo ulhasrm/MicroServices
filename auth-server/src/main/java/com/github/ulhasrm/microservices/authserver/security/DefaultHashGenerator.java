@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 public class DefaultHashGenerator implements HashGenerator
 {
     private static final String DEFAULT_ALGORITM = "MD5";
-    private static final String DEFAULT_ENC = "UTF-8";
 
     @Override
     public String hash( byte[] value )

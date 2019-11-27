@@ -46,7 +46,7 @@ public class MyInitialRunner implements CommandLineRunner
     {
         WorkFlow homeLoanWorkFlow =
             mayCreateWorkFlow( "Home Loan WorkFlow", "WorkFlow designed for Home Loan Process" );
-        WorkFlow defaultWorkFlow = mayCreateWorkFlow( "Default WorkFlow", "Default WorkFlow" );
+        //WorkFlow defaultWorkFlow = mayCreateWorkFlow( "Default WorkFlow", "Default WorkFlow" );
 
         mayCreateWorkFlowTransition( "Submit Application", homeLoanWorkFlow, "New Application", "Application Submitted",
                                      "", false );

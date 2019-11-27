@@ -9,7 +9,6 @@ import java.util.function.Function;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.github.ulhasrm.microservices.authserver.bean.UserBean;
 import com.github.ulhasrm.microservices.authserver.bean.UserGroupBean;
 
 import io.jsonwebtoken.Claims;
