@@ -1,5 +1,5 @@
 # Spring Micro Services
-Its used to demonstate a Loan Processing Application. --Test
+Its used to demonstate a Loan Processing Application.
 
 ## Overview
 Components designed to accompalish -
